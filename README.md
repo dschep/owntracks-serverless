@@ -6,7 +6,8 @@ This is a implementation of the [OwnTracks](http://owntracks.org/)
 [AWS Lambda](https://aws.amazon.com/lambda/) using
 [serverless](http://serverless.com).
 
-It currently only implements saving locations to DynamoDB.
+It currently only implements saving locations to
+[DynamoDB](https://aws.amazon.com/dynamodb/).
 
 ## Quickstart
 ```
