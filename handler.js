@@ -1,16 +1,24 @@
 'use strict';
 
-module.exports.hello = (event, context, callback) => {
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: 'Go Serverless v1.0! Your function executed successfully!',
-      input: event,
-    }),
-  };
+const _ = require('lodash');
+const AWS = require('aws-sdk');
+const Promise = require('bluebird');
+const uuid = require('uuid/v4');
+AWS.config.setPromisesDependency(Promise);
 
-  callback(null, response);
 
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
+module.exports.pub = (event, context, callback) => {
+  const docClient = Promise.promisifyAll(new AWS.DynamoDB.DocumentClient());
+
+  console.log(event.body)
+  const item = _.pick(JSON.parse(event.body),
+      ['acc', 'alt', 'batt', 'cog', 'desc', 'event', 'lat', 'lon', 'rad', 't', 
+      'tid', 'tst', 'vac', 'vel', 'p', 'conn']);
+  item.itemId = uuid();
+
+  docClient.putAsync({
+    TableName: process.env.table,
+    Item: item
+  }).then(() => callback(null, {statusCode:200, body: '[]'}))
+    .catch(() => callback(null, {statusCode:400, body: '[]'}));
 };

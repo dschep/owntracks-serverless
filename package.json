@@ -26,6 +26,8 @@
   "homepage": "https://github.com/dschep/owntracks-serverless#readme",
   "dependencies": {
     "aws-sdk": "^2.7.13",
-    "bluebird": "^3.4.6"
+    "bluebird": "^3.4.6",
+    "lodash": "^4.17.2",
+    "uuid": "^3.0.1"
   }
 }
