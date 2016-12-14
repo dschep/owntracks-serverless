@@ -23,5 +23,9 @@
   "bugs": {
     "url": "https://github.com/dschep/owntracks-serverless/issues"
   },
-  "homepage": "https://github.com/dschep/owntracks-serverless#readme"
+  "homepage": "https://github.com/dschep/owntracks-serverless#readme",
+  "dependencies": {
+    "aws-sdk": "^2.7.13",
+    "bluebird": "^3.4.6"
+  }
 }
