@@ -11,6 +11,9 @@ It currently implements:
  * a per-tid GeoJSON endpoint with points
  * a per-tid GeoJSON endpoint with a linestring
 
+There's no UI, but you can use https://github.com/dschep/geojson-viewer to
+visualize the GeoJSON endpoints.
+
 ## Quickstart
 ```
 # edit serverless.yml to set env vars
