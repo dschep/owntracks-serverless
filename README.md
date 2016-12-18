@@ -6,8 +6,10 @@ This is a implementation of the [OwnTracks](http://owntracks.org/)
 [AWS Lambda](https://aws.amazon.com/lambda/) using
 [serverless](http://serverless.com).
 
-It currently only implements saving locations to
-[DynamoDB](https://aws.amazon.com/dynamodb/).
+It currently implements:
+ * saving locations to [DynamoDB](https://aws.amazon.com/dynamodb/)
+ * a per-tid GeoJSON endpoint with points
+ * a per-tid GeoJSON endpoint with a linestring
 
 ## Quickstart
 ```

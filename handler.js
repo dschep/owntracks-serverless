@@ -23,3 +23,45 @@ module.exports.pub = (event, context, callback) => {
   }).then(() => callback(null, {statusCode:200, body: '[]'}))
     .catch(() => callback(null, {statusCode:400, body: '[]'}));
 };
+
+const getCoordinates = (tid, tst) => {
+  return docClient.queryAsync({
+    TableName: process.env.table,
+    KeyConditionExpression: 'tid = :tid and tst > :tst',
+    ExpressionAttributeValues: {
+      ':tid': tid,
+      ':tst': parseInt(tst) || (Date.now() / 1000) - 60 * 60 * 24 * 7,
+    },
+  });
+}
+
+module.exports.points = (event, context, callback) => {
+  getCoordinates(event.pathParameters.tid, event.queryStringParameters && event.queryStringParameters.tst)
+    .then((data) => callback(null, {
+      statusCode: 200,
+      headers: {'Access-Control-Allow-Origin' : '*'},
+      body: JSON.stringify({
+        type: 'FeatureCollection',
+        features: data.Items.map((item) => {return {
+          type: 'Feature',
+          geometry: {type: 'Point', coordinates: [item.lon, item.lat]},
+          properties: _.omit(item, ['lat', 'lon']),
+        };}),
+      }),
+    }))
+  .catch((err) => callback(null, {statusCode: 500, body: JSON.stringify(err)}))
+};
+
+
+module.exports.linestring = (event, context, callback) => {
+  getCoordinates(event.pathParameters.tid, event.queryStringParameters && event.queryStringParameters.tst)
+    .then((data) => callback(null, {
+      statusCode: 200,
+      headers: {'Access-Control-Allow-Origin' : '*'},
+      body: JSON.stringify({
+        type: 'LineString',
+        coordinates: data.Items.map((item) => [item.lon, item.lat]),
+      }),
+    }))
+  .catch(() => callback(null, {statusCode: 500}))
+};

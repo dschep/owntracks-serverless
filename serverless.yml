@@ -24,6 +24,20 @@ functions:
       - http:
           path: pub
           method: post
+  geojson-points:
+    handler: handler.points
+    events:
+      - http:
+          path: '{tid}/geojson/points'
+          method: get
+          cors: true
+  geojson-linestring:
+    handler: handler.linestring
+    events:
+      - http:
+          path: '{tid}/geojson/linestring'
+          method: get
+          cors: true
 resources:
   Resources:
     OwntracksDynamoDbTable:
