@@ -30,7 +30,7 @@ const getCoordinates = (tid, tst) => {
     KeyConditionExpression: 'tid = :tid and tst > :tst',
     ExpressionAttributeValues: {
       ':tid': tid,
-      ':tst': parseInt(tst) || (Date.now() / 1000) - 60 * 60 * 24 * 7,
+      ':tst': parseInt(tst) || (Date.now() / 1000) - 60 * 60 * 12,
     },
   });
 }
